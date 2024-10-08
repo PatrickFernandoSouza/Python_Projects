@@ -1,0 +1,57 @@
+import flet as ft
+import webbrowser as wb
+
+
+# Página Principal e suas definições
+def main(page: ft.Page):
+    page.window_width = 380
+    page.window_height = 300
+    page.title = "Social Networks - Patrick"
+    page.window_resizable = False
+    page.window_full_screen = False
+    page.window_maximizable = False
+    page.bgcolor = ft.colors.WHITE24
+
+    # Adicionando imagem de fundo
+
+    # Adicionando os botões / links horizontalmente
+    page.add(
+        ft.Row(
+            [
+                ft.ElevatedButton("LinkedIn", on_click=linkedin, color="white"),
+                ft.ElevatedButton("GitHub", on_click=github, color="white"),
+                ft.ElevatedButton("Instagram", on_click=instagram, color="white"),
+            ],
+            opacity=100,
+            alignment=ft.MainAxisAlignment.CENTER,
+        )
+    )
+
+    # Adicionando página de imagem
+
+    page.add(
+        ft.Image(
+            src=f"https://media.licdn.com/dms/image/v2/D4D03AQFgeHSabeUzGg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1724702694261?e=1733961600&v=beta&t=rgwdh3hlleqJ4OXFvSC4L3AC2ohs-7KsCpNWHHog5vA",
+            width=400,
+            height=200,
+            fit=ft.ImageFit.CONTAIN,
+            border_radius=ft.border_radius.all(10)
+        )
+    )
+    # Atualiza a página
+    page.update()
+
+
+def linkedin(e):
+    wb.open("https://www.linkedin.com/in/patrickfernandosouza")
+
+
+def github(e):
+    wb.open("https://www.github.com/PatrickFernandoSouza")
+
+
+def instagram(e):
+    wb.open("https://www.instagram.com/pat.oficial")
+
+
+ft.app(main)
