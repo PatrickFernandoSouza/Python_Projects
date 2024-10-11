@@ -1,0 +1,78 @@
+import flet as ft
+from flet import NumbersOnlyInputFilter
+
+
+def main(page: ft.Page):
+    page.window_height = 450
+    page.window_width = 310
+    page.title = "Cálculos de juros"
+    page.window_resizable = False
+    page.window_maximizable = False
+    page.window_always_on_top = True
+    page.bgcolor = "#1C1C1C"
+
+    txt_valor_deposito = ft.Text("Valor do depósito", size=13)
+    valor_deposito = ft.TextField(
+        label="Digite um número", input_filter=NumbersOnlyInputFilter()
+    )
+    txt_anos = ft.Text("Anos", size=13)
+    anos = ft.TextField(
+        label="Digite os anos (apenas números):", input_filter=NumbersOnlyInputFilter()
+    )
+    txt_taxa = ft.Text("Taxa", size=13)
+    taxa = ft.TextField(
+        label="Digite a taxa de juros (apenas números):",
+        input_filter=NumbersOnlyInputFilter(),
+    )
+    result_text = ft.Text("0")
+
+    def calcular(e):
+        try:
+            deposito = float(valor_deposito.value)
+            anos_int = int(anos.value)
+            taxa_float = float(taxa.value) / 100
+            juros_calc = deposito * anos_int * taxa_float
+            result_text.value = f"R$ {juros_calc:.2f}"
+            page.update()
+        except ValueError:
+            result_text.value = "Erro: \nPreencha os campos com números!"
+            page.update()
+
+    def reset_counters(e):
+        valor_deposito.value = "0"
+        anos.value = "0"
+        taxa.value = "0"
+        result_text.value = "0"
+        page.update()
+
+    page.add(
+        txt_valor_deposito,
+        valor_deposito,
+        txt_anos,
+        anos,
+        txt_taxa,
+        taxa,
+    )
+    page.add(
+        ft.Row(
+            [
+                ft.ElevatedButton("CALCULAR", on_click=calcular, color="white"),
+                ft.ElevatedButton("RESETAR", on_click=reset_counters, color="white"),
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
+        )
+    )
+
+    page.add(
+        ft.Row(
+            [
+                ft.Text("TAXA: "),
+                result_text,
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
+        )
+    )
+    page.update()
+
+
+ft.app(target=main)
